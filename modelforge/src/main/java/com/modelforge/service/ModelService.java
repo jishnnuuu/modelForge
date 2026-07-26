@@ -17,4 +17,8 @@ public class ModelService {
     public List<Model> getModels(){
         return modelRepository.findAll();
     }
+
+    public Model saveModel(Model model){
+        return modelRepository.save(model);
+    }
 }
