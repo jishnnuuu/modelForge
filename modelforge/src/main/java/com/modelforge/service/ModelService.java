@@ -14,6 +14,12 @@ public class ModelService {
         this.modelRepository = modelRepository;
     }
 
+    public Model getModelById(Long id) {
+        return modelRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Model Not Found"));
+    }
+
     public List<Model> getModels(){
         return modelRepository.findAll();
     }

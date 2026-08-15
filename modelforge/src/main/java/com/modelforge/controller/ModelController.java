@@ -2,14 +2,13 @@ package com.modelforge.controller;
 
 import com.modelforge.model.Model;
 import com.modelforge.service.ModelService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/models")
 public class ModelController {
     private final ModelService modelService;
 
@@ -17,13 +16,18 @@ public class ModelController {
         this.modelService = modelService;
     }
 
-    @GetMapping("/model")
-    public List<Model> getModel(){
+    @GetMapping
+    public List<Model> getModels(){
         return modelService.getModels();
     }
 
     @PostMapping
-    public Model createModel(@RequestBody Model model){
+    public Model createModel(@Valid @RequestBody Model model){
         return modelService.saveModel(model);
+    }
+
+    @GetMapping("/{id}")
+    public Model getModel(@PathVariable Long id){
+        return modelService.getModelById(id);
     }
 }
