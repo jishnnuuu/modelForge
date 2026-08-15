@@ -39,4 +39,20 @@ public class ModelService {
         Model savedModel = modelRepository.save(model);
         return modelMapper.toResponse(savedModel);
     }
+
+    public List<ModelResponse> searchByName(String name) {
+        return modelRepository
+                .findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(modelMapper::toResponse)
+                .toList();
+    }
+
+    public List<ModelResponse> getModelsAboveAccuracy(double accuracy) {
+        return modelRepository
+                .findByAccuracyGreaterThanEqual(accuracy)
+                .stream()
+                .map(modelMapper::toResponse)
+                .toList();
+    }
 }

@@ -32,4 +32,9 @@ public class ModelController {
     public ModelResponse getModel(@PathVariable Long id){
         return modelService.getModelById(id);
     }
+
+    @GetMapping("/search")
+    public List<ModelResponse> searchModels(@RequestParam String name){
+        return modelService.searchByName(name);
+    }
 }
