@@ -1,5 +1,7 @@
 package com.modelforge.controller;
 
+import com.modelforge.dto.ModelRequest;
+import com.modelforge.dto.ModelResponse;
 import com.modelforge.model.Model;
 import com.modelforge.service.ModelService;
 import jakarta.validation.Valid;
@@ -17,17 +19,17 @@ public class ModelController {
     }
 
     @GetMapping
-    public List<Model> getModels(){
+    public List<ModelResponse> getModels(){
         return modelService.getModels();
     }
 
     @PostMapping
-    public Model createModel(@Valid @RequestBody Model model){
-        return modelService.saveModel(model);
+    public ModelResponse createModel(@Valid @RequestBody ModelRequest requestModel){
+        return modelService.saveModel(requestModel);
     }
 
     @GetMapping("/{id}")
-    public Model getModel(@PathVariable Long id){
+    public ModelResponse getModel(@PathVariable Long id){
         return modelService.getModelById(id);
     }
 }

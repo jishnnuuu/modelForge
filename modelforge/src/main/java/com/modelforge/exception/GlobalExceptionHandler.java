@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     }
 
     // Now invalid inputs get 400 Bad Request instead of generic 500
-    @ExceptionHandler(ModelNotFoundException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleValidationException(MethodArgumentNotValidException ex){
         return ex.getBindingResult()
