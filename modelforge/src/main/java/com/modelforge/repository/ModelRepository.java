@@ -1,7 +1,10 @@
 package com.modelforge.repository;
 import com.modelforge.model.Model;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
@@ -15,5 +18,5 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
             double minAccuracy,
             double maxAccuracy);
 
-    List<Model> findByNameContainingIgnoreCase(String name);
+    Page<Model> findByNameContainingIgnoreCase(String name, Pageable pageable);
 }

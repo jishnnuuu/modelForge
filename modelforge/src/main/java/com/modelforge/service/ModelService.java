@@ -6,6 +6,9 @@ import com.modelforge.dto.ModelResponse;
 import com.modelforge.exception.ModelNotFoundException;
 import com.modelforge.model.Model;
 import com.modelforge.repository.ModelRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +23,11 @@ public class ModelService {
         this.modelMapper = modelMapper;
     }
 
-    public List<ModelResponse> getModels(){
-        return modelRepository.findAll()
-                .stream()
-                .map(modelMapper::toResponse)
-                .toList();
+    public Page<ModelResponse> getModels(
+            @PageableDefault(size = 10, sort = "accuracy") Pageable pageable
+        ){
+        return modelRepository.findAll(pageable)
+                .map(modelMapper::toResponse);
     }
 
     public ModelResponse getModelById(Long id) {
@@ -40,12 +43,10 @@ public class ModelService {
         return modelMapper.toResponse(savedModel);
     }
 
-    public List<ModelResponse> searchByName(String name) {
+    public Page<ModelResponse> searchByName(String name, Pageable pageable) {
         return modelRepository
-                .findByNameContainingIgnoreCase(name)
-                .stream()
-                .map(modelMapper::toResponse)
-                .toList();
+                .findByNameContainingIgnoreCase(name, pageable)
+                .map(modelMapper::toResponse);
     }
 
     public List<ModelResponse> getModelsAboveAccuracy(double accuracy) {

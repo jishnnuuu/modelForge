@@ -5,6 +5,8 @@ import com.modelforge.dto.ModelResponse;
 import com.modelforge.model.Model;
 import com.modelforge.service.ModelService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +21,8 @@ public class ModelController {
     }
 
     @GetMapping
-    public List<ModelResponse> getModels(){
-        return modelService.getModels();
+    public Page<ModelResponse> getModels(Pageable pageable){
+        return modelService.getModels(pageable);
     }
 
     @PostMapping
@@ -34,7 +36,8 @@ public class ModelController {
     }
 
     @GetMapping("/search")
-    public List<ModelResponse> searchModels(@RequestParam String name){
-        return modelService.searchByName(name);
+    public Page<ModelResponse> searchModels(@RequestParam String name, Pageable pageable){
+        return modelService.searchByName(name, pageable);
     }
 }
+
