@@ -1,5 +1,6 @@
 package com.modelforge.service;
 
+import com.modelforge.exception.ModelNotFoundException;
 import com.modelforge.model.Model;
 import com.modelforge.repository.ModelRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ModelService {
     public Model getModelById(Long id) {
         return modelRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Model Not Found"));
+                        new ModelNotFoundException(id));
     }
 
     public List<Model> getModels(){
